@@ -10,7 +10,7 @@ export class LoginPage {
   readonly loginButton: Locator;
   readonly forgotPasswordLink: Locator;
   readonly errorMessage: Locator;
-  readonly showPassworButton: Locator;
+  readonly showPasswordButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,7 +19,7 @@ export class LoginPage {
     this.loginButton = page.getByTestId('login-submit-btn');
     this.forgotPasswordLink = page.getByTestId('forgot-password-link');
     this.errorMessage = page.getByTestId('login-error-message');
-    this.showPassworButton = page.locator('.relative button');
+    this.showPasswordButton = page.locator('.relative button');
 
   }
 
@@ -28,7 +28,7 @@ export class LoginPage {
   }
 
   async assertOnLoginPage() {
-    await expect(this.page).toHaveURL("https://qaplayground.com/bank/login");
+    await expect(this.page).toHaveURL(/\/login$/);
     await expect(this.usernameInput).toBeVisible();
     await expect(this.passwordInput).toBeVisible();
     await expect(this.forgotPasswordLink).toBeVisible();
@@ -61,43 +61,24 @@ export class LoginPage {
   }
 
   async togglePasswordVisibility() {
-    await this.showPassworButton.click();
+    await this.showPasswordButton.click();
   }
 
   async assertVisiblePassword(password: string) {
     await expect(this.passwordInput).toHaveAttribute("type", "text");
     await expect(this.passwordInput).toHaveValue(password);
-    await expect(this.showPassworButton).toHaveAttribute("aria-label", "Hide password");
+    await expect(this.showPasswordButton).toHaveAttribute("aria-label", "Hide password");
   }
 
   async assertHiddenPassword() {
     await expect(this.passwordInput).toHaveAttribute("type", "password");
-    await expect(this.showPassworButton).toHaveAttribute("aria-label", "Show password");
+    await expect(this.showPasswordButton).toHaveAttribute("aria-label", "Show password");
   }
-
-
-
-
-
-
-
 
   // Fill in the form and submit it.
   async login(username: string, password: string) {
     await this.enterUserName(username);
     await this.enterPassword(password);
     await this.submit();
-  }
-
-
-
-  // Assertion helpers keep expect() calls out of your spec files.
-async expectErrorMessage(text: string) {
-    await expect(this.invalidCredentialsErrorMessage).toContainText(text);
-  }
-
-  async expectLoggedIn() {
-    // TODO: adjust to whatever proves login worked (URL, heading, etc.)
-    await expect(this.page).not.toHaveURL(/login/);
   }
 }
