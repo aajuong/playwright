@@ -75,6 +75,10 @@ export class LoginPage {
     await expect(this.showPasswordButton).toHaveAttribute("aria-label", "Show password");
   }
 
+  async clickForgotPasswordLink() {
+    await this.forgotPasswordLink.click();
+  }
+
   // Fill in the form and submit it.
   async login(username: string, password: string) {
     await this.enterUserName(username);
