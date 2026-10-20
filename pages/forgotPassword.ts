@@ -6,7 +6,7 @@ export class ForgotPasswordPage {
     readonly backToSigninButton: Locator;
     readonly sendResetLinkButton: Locator;
     readonly emailField: Locator;
-    readonly forgotPasswowrdCard: Locator;
+    readonly forgotPasswordCard: Locator;
     readonly forgotPasswordSuccessMessage: Locator;
     readonly errorMessage: Locator;
 
@@ -15,15 +15,15 @@ export class ForgotPasswordPage {
         this.backToSigninButton = page.getByRole('link', { name: 'Back to Sign In' });
         this.sendResetLinkButton = page.getByRole('button', { name: 'Send Reset Link' });
         this.emailField = page.getByLabel('Email address');
-        this.forgotPasswowrdCard = page.getByTestId('forgot-password-card');
+        this.forgotPasswordCard = page.getByTestId('forgot-password-card');
         this.forgotPasswordSuccessMessage = page.getByTestId('forgot-password-success-msg');
         this.errorMessage = page.getByTestId('forgot-password-error');
     }
 
     async assertOnForgotPasswordPage() {
         await expect(this.page).toHaveURL(/\/forgot-password$/);
-        await expect(this.forgotPasswowrdCard).toBeVisible();
-        await expect(this.forgotPasswowrdCard).toContainText("Enter the email address associated with your account and we'll send you a link to reset your password.");
+        await expect(this.forgotPasswordCard).toBeVisible();
+        await expect(this.forgotPasswordCard).toContainText("Enter the email address associated with your account and we'll send you a link to reset your password.");
         await expect(this.sendResetLinkButton).toBeVisible();
         await expect(this.backToSigninButton).toBeVisible();
     }
